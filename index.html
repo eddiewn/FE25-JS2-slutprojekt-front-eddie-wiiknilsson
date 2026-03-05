@@ -9,28 +9,29 @@
     </head>
     <body>
         <div class="add-stuff mt-10 flex justify-evenly text-xs">
-            <div
-                class="flex flex-col w-72 border rounded border-gray-300 p-4 gap-3"
+            <form
+                class="add-member-form flex flex-col w-72 border rounded border-gray-300 p-4 gap-3"
             >
                 <h3 class="self-center text-xl">Add Member</h3>
                 <div class="flex gap-2">
                     <p class="">Name:</p>
-                    <input type="text" class="border border-gray-300 rounded" />
+                    <input name="name" type="text" class="border border-gray-300 rounded" />
                 </div>
                 <div class="flex gap-2">
                     <p>Category:</p>
-                    <select name="" id="" class="border rounded">
-                        <option value="">UX</option>
-                        <option value="">Frontend-dev</option>
-                        <option value="">Backend-dev</option>
+                    <select name="category" id="" class="border rounded">
+                        <option name="" value="UX">UX</option>
+                        <option name="" value="Frontend">Frontend-dev</option>
+                        <option name="" value="Backend">Backend-dev</option>
                     </select>
                 </div>
                 <button
+                    type="submit"
                     class="p-2 mt-auto bg-blue-600 w-1/2 self-center text-sm rounded text-white hover:opacity-70 cursor-pointer"
                 >
                     Add Member
                 </button>
-            </div>
+            </form>
             <form
                 class="add-assignment-form flex flex-col w-72 border rounded border-gray-300 p-4 gap-3"
             >
@@ -62,5 +63,6 @@
         </div>
         <script type="module" src="/src/main.ts"></script>
         <script type="module" src="/src/addAssignment.ts"> </script>
+        <script type="module" src="/src/addMember.ts"></script>
     </body>
 </html>

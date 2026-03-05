@@ -2,7 +2,6 @@
 const addAssignment = async (e: Event) => {
     e.preventDefault();
 
-
     const formData = new FormData(e.currentTarget as HTMLFormElement)
 
     const title = formData.get("title")?.toString() || "";
@@ -25,7 +24,7 @@ const addAssignment = async (e: Event) => {
             }),
         });
 
-        // if(!response.ok) throw new Error(`Fel någonstans att skicka assignment, ${response.status}`)
+        if(!response.ok) throw new Error(`Fel någonstans att skicka assignment, ${response.status}`)
 
         const result = await response.json()
         console.log(result)
@@ -33,9 +32,6 @@ const addAssignment = async (e: Event) => {
         console.log(error)
     }
 }
-
-
-
 
 const form = document.querySelector<HTMLFormElement>(".add-assignment-form")
 if (form) {
