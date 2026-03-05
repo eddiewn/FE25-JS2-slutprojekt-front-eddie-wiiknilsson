@@ -1,6 +1,6 @@
 
 const addAssignment = async (e: Event) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     const formData = new FormData(e.currentTarget as HTMLFormElement)
 
