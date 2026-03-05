@@ -10,5 +10,5 @@ export const getMembers = async() => {
     } catch (error) {
         console.log(error)
     }
-
 }
+

@@ -1,5 +1,5 @@
-import {getAssignments} from "./GetAssignments";
-import { getMembers } from "./getMembers";
+import { removeAssignment, getAssignments } from "./api/assignmentsApi";
+import { getMembers } from "./api/membersApi";
 import type {Members, Assignments} from "./Types";
 
 
@@ -23,12 +23,15 @@ const createCards = async () => {
         category.textContent = assignment.category;
         category.className = "text-xs";
 
-        const bottomLayer = document.createElement("form");
+        const bottomLayer = document.createElement("div");
         bottomLayer.className = "flex gap-2";
 
         const timestamp = document.createElement("p");
         timestamp.textContent = assignment.timestamp;
         timestamp.className = "text-xs";
+
+         bottomLayer.appendChild(timestamp)
+
 
         if (assignment.status === "new") {
             const dropdown = document.createElement("select");
@@ -42,6 +45,9 @@ const createCards = async () => {
             dropdown.appendChild(placeholderOption);
 
             members?.forEach((member: Members) => {
+
+                if(member.category !== assignment.category) return;
+
                 const option = document.createElement("option")
                 option.textContent = member.name;
                 dropdown.appendChild(option)
@@ -51,9 +57,8 @@ const createCards = async () => {
             assignButton.textContent = "Assign";
             assignButton.type = "submit";
 
-            bottomLayer.append(timestamp, dropdown, assignButton);
+            bottomLayer.append(dropdown, assignButton);
 
-            box.append(title, description, category, bottomLayer);
 
             const apendNew = document.querySelector(".new");
 
@@ -61,20 +66,32 @@ const createCards = async () => {
         }else if(assignment.status === "doing"){
             console.log(`This is in doing: ${assignment.title}`)
 
-            box.append(title)
+            const doneButton = document.createElement("button")
+            doneButton.textContent = 'Mark "done"'    
+
 
             const appendDoing = document.querySelector(".doing");
+            bottomLayer.appendChild(doneButton)
+
             appendDoing?.append(box)
-            
 
         }else if(assignment.status === "done"){
             console.log(`This is in done: ${assignment.title}`)
 
-            box.append(title)
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.className = "bg-red-600 border rounded"
+
+            removeButton.addEventListener("click", () => removeAssignment(assignment.id))
+
+            bottomLayer.appendChild(removeButton);
 
             const appendDoing = document.querySelector(".done");
             appendDoing?.append(box)
         }
+
+        box.append(title, description, category, bottomLayer);
+
     });
 };
 
