@@ -46,7 +46,11 @@ const createCards = async () => {
 
         if (assignment.status === "new") {
             const form = document.createElement("form");
+            form.className="assignForm";
             const dropdown = document.createElement("select");
+            dropdown.name = "dropdown";
+
+            
 
             const placeholderOption = document.createElement("option");
             placeholderOption.textContent = "Assign to: ";
@@ -61,6 +65,7 @@ const createCards = async () => {
                 if(member.category !== assignment.category) return;
 
                 const option = document.createElement("option")
+                option.value = member.name;
                 option.textContent = member.name;
                 dropdown.appendChild(option)
             });
@@ -68,6 +73,21 @@ const createCards = async () => {
             const assignButton = document.createElement("button");
             assignButton.textContent = "Assign";
             assignButton.type = "submit";
+
+            form.addEventListener("submit", async(e) => {
+                e.preventDefault();
+                const formData = new FormData(form as HTMLFormElement);
+                const assignTo = formData.get("dropdown")
+
+
+                assignment.assignedto = assignTo as string;
+                assignment.status = "doing";
+                await patchAssignment(assignment);
+
+                createCards();
+            })
+
+            
 
             form.append(dropdown, assignButton)
             bottomLayer.append(form);
