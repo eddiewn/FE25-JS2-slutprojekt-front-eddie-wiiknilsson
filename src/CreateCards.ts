@@ -4,6 +4,17 @@ import type {Members, Assignments} from "./Types";
 
 
 const createCards = async () => {
+            const appendDoing = document.querySelector(".doing");
+            const apendNew = document.querySelector(".new");
+            const appendDone = document.querySelector(".done");
+
+            if(appendDoing)appendDoing.innerHTML = '';
+            if(apendNew)apendNew.innerHTML = '';
+            if(appendDone)appendDone.innerHTML = '';
+
+
+    
+
     const assignments = await getAssignments();
     const members = await getMembers();
 
@@ -60,7 +71,6 @@ const createCards = async () => {
             bottomLayer.append(dropdown, assignButton);
 
 
-            const apendNew = document.querySelector(".new");
 
             apendNew?.append(box);
         }else if(assignment.status === "doing"){
@@ -70,7 +80,6 @@ const createCards = async () => {
             doneButton.textContent = 'Mark "done"'    
 
 
-            const appendDoing = document.querySelector(".doing");
             bottomLayer.appendChild(doneButton)
 
             appendDoing?.append(box)
@@ -82,12 +91,14 @@ const createCards = async () => {
             removeButton.textContent = "Remove";
             removeButton.className = "bg-red-600 border rounded"
 
-            removeButton.addEventListener("click", () => removeAssignment(assignment.id))
+            removeButton.addEventListener("click", async() => {
+                await removeAssignment(assignment.id)
+                createCards();
+            })
 
             bottomLayer.appendChild(removeButton);
 
-            const appendDoing = document.querySelector(".done");
-            appendDoing?.append(box)
+            appendDone?.append(box)
         }
 
         box.append(title, description, category, bottomLayer);
