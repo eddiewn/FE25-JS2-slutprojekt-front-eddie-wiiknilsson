@@ -77,5 +77,3 @@ const assignmentForm = document.querySelector<HTMLFormElement>(".add-assignment-
 if (assignmentForm) {
     assignmentForm.addEventListener("submit", addAssignment)
 }
-
-const assignForm = document.querySelector(".assignForm");
