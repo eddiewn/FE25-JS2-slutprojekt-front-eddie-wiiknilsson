@@ -1,3 +1,4 @@
+import type { Assignments } from "../Types";
 
 export const getAssignments = async() => {
     try {
@@ -30,6 +31,27 @@ export const removeAssignment = async(id: string) => {
         const result = await response.json();
         console.log(result)
         
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const patchAssignment = async(assignment: Assignments) => {
+    try {
+        const URL = "http://localhost:3000/patchAssignment"
+        const response = await fetch(URL, {
+            method: "PATCH",
+            headers:{
+                "Content-Type": "application/json",         
+            },
+            body: JSON.stringify(assignment)
+        })
+
+        const result = await response.json();
+
+        if(!result.ok) throw new Error ("fel");
+
+        console.log(result)
     } catch (error) {
         console.log(error)
     }

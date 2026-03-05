@@ -1,4 +1,4 @@
-import { removeAssignment, getAssignments } from "./api/assignmentsApi";
+import { removeAssignment, getAssignments, patchAssignment } from "./api/assignmentsApi";
 import { getMembers } from "./api/membersApi";
 import type {Members, Assignments} from "./Types";
 
@@ -45,6 +45,7 @@ const createCards = async () => {
 
 
         if (assignment.status === "new") {
+            const form = document.createElement("form");
             const dropdown = document.createElement("select");
 
             const placeholderOption = document.createElement("option");
@@ -68,7 +69,8 @@ const createCards = async () => {
             assignButton.textContent = "Assign";
             assignButton.type = "submit";
 
-            bottomLayer.append(dropdown, assignButton);
+            form.append(dropdown, assignButton)
+            bottomLayer.append(form);
 
 
 
@@ -76,9 +78,18 @@ const createCards = async () => {
         }else if(assignment.status === "doing"){
             console.log(`This is in doing: ${assignment.title}`)
 
-            const doneButton = document.createElement("button")
-            doneButton.textContent = 'Mark "done"'    
+            const assignedTo = document.createElement("p");
+            assignedTo.textContent = `Assigned to: ${assignment.assignedto}`
 
+            const doneButton = document.createElement("button")
+            doneButton.textContent = 'Mark "done"' 
+            doneButton.addEventListener("click", async() => {
+                assignment.status = "done";
+                await patchAssignment(assignment)
+                createCards();
+            })   
+
+            box.append(assignedTo)
 
             bottomLayer.appendChild(doneButton)
 
