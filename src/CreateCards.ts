@@ -75,6 +75,7 @@ const createCards = async () => {
             assignButton.type = "submit";
 
             form.addEventListener("submit", async(e) => {
+
                 e.preventDefault();
                 const formData = new FormData(form as HTMLFormElement);
                 const assignTo = formData.get("dropdown")
